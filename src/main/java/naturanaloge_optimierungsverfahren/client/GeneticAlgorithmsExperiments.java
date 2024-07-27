@@ -20,7 +20,7 @@ public class GeneticAlgorithmsExperiments {
         int mutationType = 0;
         int recombinationType = 0;
 
-        acoVSgaVSni(populationSize, generations);
+        defVSbest();
     }
 
     public static void mutationTypeTest(int populationSize, int generations){
@@ -188,6 +188,36 @@ public class GeneticAlgorithmsExperiments {
                 endTime = System.nanoTime();
                 duration = endTime - startTime;
                 writer.write(String.format("Nearest Insertion;%d;%d;%f\n", i + 1, duration, optimum3.getPathWeight()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void defVSbest(){
+        try (FileWriter writer = new FileWriter("defVSbest.csv")) {
+            // Write CSV header
+            writer.write("Algorithm;Run;Time;Result\n");
+
+            for (int i = 0; i < 50; i++) {
+                Graph g = generate("g", 50, 10, 30);
+
+                // Default
+                long startTime = System.nanoTime();
+                GeneticAlgorithms ga1 = new GeneticAlgorithms(g, 100, 1, 1);
+                Tour optimum1 = ga1.findOptimum(500);
+                long endTime = System.nanoTime();
+                long duration = endTime - startTime;
+                writer.write(String.format("Default;%d;%d;%f\n", i + 1, duration, optimum1.getPathWeight()));
+
+                // Best
+                startTime = System.nanoTime();
+                GeneticAlgorithms ga2 = new GeneticAlgorithms(g, 2000, 0, 0, 0.3, 0.7);
+                Tour optimum2 = ga2.findOptimum(2000);
+                endTime = System.nanoTime();
+                duration = endTime - startTime;
+                writer.write(String.format("Best;%d;%d;%f\n", i + 1, duration, optimum2.getPathWeight()));
+
             }
         } catch (IOException e) {
             e.printStackTrace();
