@@ -153,27 +153,4 @@ public class AntColonyOptimization {
         return bestTourLength;
     }
 
-    public static void main(String[] args) {
-        Graph graph = new SingleGraph("TSP");
-
-        // Beispielstädte hinzufügen
-        String[] cities = {"A", "B", "C", "D"};
-        for (String city : cities) {
-            graph.addNode(city).setAttribute("ui.label", city);
-        }
-
-        // Kanten mit Entfernungen hinzufügen
-        graph.addEdge("AB", "A", "B").setAttribute("weight", 10);
-        graph.addEdge("AC", "A", "C").setAttribute("weight", 15);
-        graph.addEdge("AD", "A", "D").setAttribute("weight", 20);
-        graph.addEdge("BC", "B", "C").setAttribute("weight", 35);
-        graph.addEdge("BD", "B", "D").setAttribute("weight", 25);
-        graph.addEdge("CD", "C", "D").setAttribute("weight", 30);
-
-
-        AntColonyOptimization aco = new AntColonyOptimization(graph, 10, 100, 0.1, 1.0, 2.0);
-        aco.solve();
-        System.out.println(aco);
-    }
-
 }
